@@ -1,7 +1,7 @@
 # Art Blocks Engine
 [![GitPOAPs](https://public-api.gitpoap.io/v1/repo/ArtBlocks/artblocks-engine-react/badge)](https://www.gitpoap.io/gh/ArtBlocks/artblocks-engine-react)
 
-This project is meant to be used as an Art Blocks Engine web app. 
+This project is meant to be used as an Art Blocks Engine web app.. 
 
 Ikigai Labs XYZ may soon launch a Dutch auction format. The sale will inaugurate the launch of an auction house’s Gen Art Program powered by Art Blocks’ Art Blocks Engine — the company’s generative art solutions platform that provides technical infrastructure support for brands looking to expand their generative minting capabilities.
 
