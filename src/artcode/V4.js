@@ -1,43 +1,50 @@
-// ALOHA
+const colors = ['#29A691', '#DB4F54', '#3B2B20', '#FCD265','#B8D9CE']
+const choose = (arr) => arr[Math.floor(random(arr.length))]
 
-let shapes = [];
-const shapesNum = 10;
+scl = 0.96
+noiseScale = 333
+space = [3,3]
+thickness = [1,1]
+maxSegments = 1
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  angleMode(DEGREES);
-
-  for (let i = 0; i < shapesNum; i++) {
-    shapes.push(new Shape());
-  }
+  createCanvas(3000, 2000);
+  angleMode(DEGREES)
+  strokeCap(PROJECT);
+  noFill()
+  noLoop()
 }
 
 function draw() {
-  // background("#E7ECF2");
-
-  for (let i = 0; i < shapes.length; i++) {
-    shapes[i].move();
-    shapes[i].display();
+  background('#EBE4D8');
+  
+  for (let y=-height;y<height*2;y+=random(space[0]*scl,space[1]*scl)){
+    for (let x=-width;x<width*2;x+=random(space[0]*scl,space[1]*scl)){  
+      let v = createVector(x,y)
+      let lastV = v.copy()
+      const segments = random(maxSegments)
+      const sw = round(random(thickness[0]*scl,thickness[1]*scl))
+      strokeWeight(sw)
+      for (let seg=0;seg<segments;seg++){
+        stroke(choose(colors))
+        beginShape()
+        curveVertex(v.x,v.y)
+        for (let i=0;i<random(2,5);i++){
+          const d = 360*noise(v.x/(noiseScale*scl),v.y/(noiseScale*scl))
+          const dir = p5.Vector.fromAngle(d).setMag(3*scl)
+          lastV = v.copy()
+          v.x += dir.x
+          v.y += dir.y
+          if (v.x > width-50 || v.x < 50 || v.y > height-50 || v.y < 50) break
+          curveVertex(v.x,v.y)
+        }
+        curveVertex(v.x,v.y)
+        endShape()
+        v = lastV.copy()
+      }
+  
+    }
   }
-}
-
-class Shape {
-  constructor() {
-    this.x = 0;
-    this.y = 0;
-    this.d = random(10, 50);
-    this.nx = random(1000);
-    this.ny = random(1000);
-    this.n = random(1000);
-  }
-
-  move() {
-    this.x = width * noise(this.n, this.nx);
-    this.y = height * noise(this.n, this.ny);
-    this.n += 0.005;
-  }
-
-  display() {
-    circle(this.x, this.y, this.d);
-  }
+  strokeWeight(50)
+  rect(0,0,width,height)
 }

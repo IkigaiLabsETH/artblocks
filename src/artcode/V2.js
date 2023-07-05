@@ -1,59 +1,50 @@
-// ALOHA
+const colors = ['#29A691', '#DB4F54', '#3B2B20', '#FCD265','#B8D9CE']
+const choose = (arr) => arr[Math.floor(random(arr.length))]
 
-let shapes = [];
-const shapesNum = 10;
-
-const palette = ["#0276D1", "#011E60", "#79BCC9", "#F6F5BE", "#269182"];
+scl = 1
+noiseScale = 9999
+space = [4,2]
+thickness = [1,1]
+maxSegments = 1
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  angleMode(DEGREES);
-
-  for (let i = 0; i < shapesNum; i++) {
-    shapes.push(new Shape());
-  }
-
-  noStroke();
-  background(palette[0]);
+  createCanvas(800, 800);
+  angleMode(DEGREES)
+  strokeCap(PROJECT);
+  noFill()
+  noLoop()
 }
 
 function draw() {
-  for (let i = 0; i < shapes.length; i++) {
-    shapes[i].move();
-    shapes[i].display();
-  }
-}
-
-class Shape {
-  constructor() {
-    this.x = 0;
-    this.y = 0;
-    this.d = random(5, 100);
-    this.nx = random(1000);
-    this.ny = random(1000);
-    this.n = random(1000);
-    this.rotateSpeed = random(3, 10) * random([-1, 1]);
-    this.c = color(random(palette));
-    this.c.setAlpha(random(5, 30));
-  }
-
-  move() {
-    this.x = map(noise(this.n, this.nx), 0, 1, -width * 0.5, width * 1.5);
-    this.y = map(noise(this.n, this.ny), 0, 1, -height * 0.5, height * 1.5);
-    this.n += 0.005;
-  }
-
-  display() {
-    fill(this.c);
-
-    push();
-    translate(this.x, this.y);
-    rotate(frameCount * this.rotateSpeed);
-    beginShape();
-    for (let i = 0; i < 360; i += 360 / 6) {
-      vertex(cos(i) * this.d, sin(i) * this.d);
+  background('#EBE4D8');
+  
+  for (let y=-height;y<height*2;y+=random(space[0]*scl,space[1]*scl)){
+    for (let x=-width;x<width*2;x+=random(space[0]*scl,space[1]*scl)){  
+      let v = createVector(x,y)
+      let lastV = v.copy()
+      const segments = random(maxSegments)
+      const sw = round(random(thickness[0]*scl,thickness[1]*scl))
+      strokeWeight(sw)
+      for (let seg=0;seg<segments;seg++){
+        stroke(choose(colors))
+        beginShape()
+        curveVertex(v.x,v.y)
+        for (let i=0;i<random(2,5);i++){
+          const d = 360*noise(v.x/(noiseScale*scl),v.y/(noiseScale*scl))
+          const dir = p5.Vector.fromAngle(d).setMag(3*scl)
+          lastV = v.copy()
+          v.x += dir.x
+          v.y += dir.y
+          if (v.x > width-50 || v.x < 50 || v.y > height-50 || v.y < 50) break
+          curveVertex(v.x,v.y)
+        }
+        curveVertex(v.x,v.y)
+        endShape()
+        v = lastV.copy()
+      }
+  
     }
-    endShape(CLOSE);
-    pop();
   }
+  strokeWeight(50)
+  rect(0,0,width,height)
 }
