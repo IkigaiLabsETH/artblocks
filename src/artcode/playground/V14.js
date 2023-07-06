@@ -1,3 +1,5 @@
+// Function to generate a random hash
+
 function random_hash() {
     let chars = "0123456789abcdef";
     let result = '0x';
@@ -5,12 +7,17 @@ function random_hash() {
     return result;
 }
 
+// Define a palette of colors.
 
 var palette = ['#F2C945', '#4381C1', '#C3423F', '#3B9764'];  
+
+// Function to get a random color from the palette
 
 function getRandomFidenzaColor() {
     return palette[Math.floor(Math.random() * palette.length)];
 }
+
+// Define token data
 
 let tokenData = {
     "hash": "0xF6E8156B3001C177C6aA35D90F7D643FF52a960d",
