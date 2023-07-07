@@ -116,3 +116,32 @@ This project includes wallet connection with [RainbowKit](https://www.rainbowkit
 - Title/artist name with link to project page
 - Images/Links to owned tokens with pagination
 - Pagination
+
+## V20 Test Project
+
+Goal is to use the V20 code to actually deploy a test on OP
+We are bullish on the OP stack as documented on LTL
+This AB template with P5JS code will unlock our ability
+to actually start testing the entire setup of AB Engine
+Before we start allocating time to refactor the frontend
+so that it matches with the Ikigai Labs XYZ brand DNA
+
+## Notes on the V20
+
+A generative art script that uses the p5.js library to create abstract images. It uses a seed to generate random values, which are then used to determine various properties of the image, such as color, complexity, and organization. The image is then drawn on a canvas using these properties.
+
+The code also includes a function to generate a color palette based on the chosen category (Warm, Cool, or Mixed). The palette is then used to color the image. The colors in the palette are chosen based on a color scheme (monochromatic, analogous, complementary, splitComplementary, triadic, square, or tetradic), and the hues are adjusted based on the category.
+
+The `getArt` function is where the image is actually drawn. It uses the properties determined earlier to draw a series of lines on the canvas. The position, rotation, and length of the lines are determined by the seed, creating a unique image each time the function is called.
+
+The `generatePalette` function creates a color palette based on a given category. It generates a series of hues based on the color scheme, then adjusts the hues based on the category. It also adjusts the weights of the colors based on the category, ensuring that the colors used in the image match the chosen category.
+
+The `weightedRandom` function is used to select a color from the palette. It selects a color based on its weight, with colors that have a higher weight being more likely to be selected.
+
+The `getHueTemperature` function determines whether a given hue is warm or cool. It's used in the `generatePalette` function to adjust the weights of the colors based on the category.
+
+The `roundToNearest` function rounds a value to the nearest interval. It's used in the `getArt` function to adjust the position of the lines when the organization is "Ordered".
+
+The `rnd`, `range`, and `rangeFloor` functions are helper functions used to generate random numbers. The `rnd` function generates a random number between 0 and 1 based on the seed, while the `range` and `rangeFloor` functions generate a random number within a given range. The `rangeFloor` function rounds the result to the nearest whole number.
+
+The `randomHash` function at the top of the script is used to generate a random seed for testing purposes. It generates a random string of hexadecimal characters, which is then converted to a number and used as the seed. This function is not used in the final image generation, but can be useful for testing and debugging.
