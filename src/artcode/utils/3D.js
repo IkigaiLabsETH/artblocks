@@ -4,7 +4,7 @@
 // In the draw function, it rotates the scene and then uses the Marching Cubes algorithm to extract and render the surface from the scalar field.
 // The Marching Cubes algorithm is a complex algorithm used in 3D graphics to create a polygonal representation of isosurfaces within volumetric data. 
 // There are libraries available that implement the Marching Cubes algorithm, such as the isosurface package available on npm. 
-// You could install the isosurface package and use it to generate the isosurface from your scalar field.
+// Implementing the Marching Cubes algorithm from scratch in p5.js would be a significant undertaking, as it's a complex algorithm that involves 3D geometry and data structures.
 
 const isosurface = require('isosurface');
 
