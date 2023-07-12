@@ -19,15 +19,15 @@ let sketch = function(p) {
       //p.frameRate(2);
   
       p.strokeWeight(6 / patch_height);
-      p.background('#d6d9d2');
+      p.background('#3C5BBD');
   
       colors = [
-        p.color(29, 132, 82),
-        p.color(101, 82, 59),
-        p.color(140, 52, 52),
-        p.color(181, 101, 55),
-        p.color(109, 46, 82),
-        p.color(58, 68, 118)
+        p.color(65, 64, 48),
+        p.color(158, 166, 131),
+        p.color(234, 178, 59),
+        p.color(243, 200, 85),
+        p.color(218, 191, 123),
+        p.color(180, 24, 64)
       ];
   
       patches = [

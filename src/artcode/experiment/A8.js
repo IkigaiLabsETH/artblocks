@@ -14,18 +14,18 @@ let sketch = function(p) {
       p.noLoop();
   
       colors = [
-        p.color(142,192,124),
-        p.color(250,189,47),
-        p.color(251,71,44),
-        p.color(211,134,147),
-        p.color(49,69,80)
+        p.color(111, 82, 86),
+        p.color(145, 114, 100),
+        p.color(155, 144, 123),
+        p.color(154, 153, 148),
+        p.color(135, 137, 135)
       ];
   
       colors2 = [
-        p.color(210,198,115),
-        p.color(253,75,98),
-        p.color(138,209,192),
-        p.color(130,130,130)
+        p.color(238, 86, 51),
+        p.color(52, 43, 37),
+        p.color(210, 207, 206),
+        p.color(207, 154, 89)
       ];
   
       for (var i = 0; i < rows; i++) {
@@ -37,7 +37,7 @@ let sketch = function(p) {
   
     p.draw = function() {
       //p.clear();
-      p.background("#4f3854");
+      p.background("#3855AE");
       p.translate(p.width / 2, p.height / 2);
       p.rotate(p.random(p.PI));
       for (var s in stripes) {

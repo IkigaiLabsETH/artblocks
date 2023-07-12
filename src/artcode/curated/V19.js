@@ -12,7 +12,7 @@ function draw() {
 
 function drawFace() {
   // Head
-  fill(210, 180, 140);
+  fill(213, 114, 84);
   ellipse(150, 150, 100, 120);
 
   // Eyes
@@ -29,7 +29,7 @@ function drawFace() {
   ellipse(170 + pupilOffsetX, 130 + pupilOffsetY, 10, 10);
 
   // Nose
-  fill(210, 180, 140);
+  fill(240, 199, 60);
   beginShape();
   vertex(150, 140);
   vertex(150, 160);
@@ -41,7 +41,7 @@ function drawFace() {
   let mouthArcStart = map(mouseY, 0, height, 0, PI);
   let mouthArcEnd = map(mouseY, 0, height, PI, 0);
 
-  fill(255, 0, 0);
+  fill(60, 48, 41);
   arc(150, 175, 50, mouthHeight, mouthArcStart, mouthArcEnd);
 
   // Eyebrows

@@ -15,8 +15,8 @@ let sketch = function(p) {
       p.noFill();
       //p.colorMode(p.HSB);
   
-      color1 = p.color(255, 240, 200);
-      color2 = p.color(0, 20, 50);
+      color1 = p.color(228, 133, 4);
+      color2 = p.color(180, 24, 64);
   
       for (var i = 0; i < points_in_stripe; i++) {
         stripe.push(p.createVector(i / (points_in_stripe - 1) * p.width, -500, 0));
