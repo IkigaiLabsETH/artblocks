@@ -3,6 +3,8 @@
 // Code now includes the speed property for the particles, the modified display conditions
 // Creating multiple sets of particles, each with a different color from the LTL palettes
 // Code is now using instance mode, which means that all p5.js functions are called on the p object that is passed into the sketch function. This allows for better encapsulation and makes it easier to have multiple sketches on the same page without them interfering with each other.
+// Generating a tectonic plate-like visualization. To achieve a similar effect in our code, modify the draw() function and create additional helper functions.
+
 
 let sketch = function(p) {
   let colors = [];
@@ -18,6 +20,14 @@ let sketch = function(p) {
     p.color(111, 78, 55), // Coffee
     p.color(20, 102, 178)  // Ephren Blue
   ]
+  let blocks = []; // Initialize the blocks array
+  let number_of_blocks = 5; // Define the number of blocks
+  let number_of_plates = 10; // Define the number of plates
+
+
+  function create_block(number_of_plates, block_index) {
+    // Your create_block implementation here
+  }
 
   class Particle {
     constructor(x, y, phi, col) {
@@ -59,6 +69,81 @@ let sketch = function(p) {
     return result;
   }
 
+  // Helper function to create tectonic plate-like visualization
+
+  function createBlock(number_of_plates, block_index) {
+    let plates = [];
+    for (var plate_index = 0; plate_index < number_of_plates; plate_index++) {
+      let points = [];
+
+      let plate_height = p.randomGaussian(0, 10);
+      if (plate_index > 0) {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(
+            p.min(-plate_padding, getNoise(i, plate_index, block_index) - plate_height) +
+              plates[plate_index - 1].points[i]
+          );
+        }
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(p.min(-plate_padding, getNoise(i, plate_index, block_index) - plate_height));
+        }
+      }
+
+      plates.push({
+        points: points,
+        color: colors[p.floor(p.random(colors.length))]
+      });
+    }
+    return plates;
+  }
+
+  function displayBlock(block, block_index) {
+    block.forEach(function(plate, index) {
+      p.fill(plate.color);
+      p.beginShape();
+      if (index === 0) {
+        p.vertex(0, 0);
+        p.vertex(W, 0);
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          p.vertex(i * W / resolution, block[index - 1].points[i] - plate_padding);
+        }
+      }
+      for (let i = resolution; i >= 0; i--) {
+        p.vertex(i * W / resolution, block[index].points[i]);
+      }
+      p.endShape(p.CLOSE);
+    });
+  }
+
+  function getNoise(x, y, z) {
+    return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.3);
+  }
+
+  function create_tectonic_visualization() {
+    // Creating the tectonic visualization
+    blocks.forEach(function(block, block_index) {
+      let current_height = 0;
+      p.translate(65, p.height - 65);
+
+      block.forEach(function(plate, index) {
+        let block_height = p.abs(Math.min(...plate.points) - 60);
+
+        if (current_height + block_height < p.height - 200) {
+          display_block(block, block_index);
+          p.translate(0, -block_height);
+          current_height += block_height;
+        } else {
+          p.translate(570, current_height);
+          display_block(block, block_index);
+          p.translate(0, -block_height);
+          current_height = block_height;
+        }
+      });
+    });
+  }
+
   p.setup = function() {
     tokenData = {
       "hash": random_hash()
@@ -75,6 +160,12 @@ let sketch = function(p) {
     p.noLoop();
     p.noStroke();
     p.colorMode(p.RGB);
+
+    // Create the blocks array with valid data
+    for (let blockIndex = 0; blockIndex < number_of_blocks; blockIndex++) {
+      let block = create_block(number_of_plates, blockIndex);
+      blocks.push(block);
+    }
 
     // Select a random background
     let backgroundColor = p.random(backgroundColors);
@@ -96,26 +187,39 @@ let sketch = function(p) {
     colors = selectedPalette.colors;
     paletteName = selectedPalette.name;
 
-    for (var j = 0; j < number_of_particle_sets; j++) {
+    // Create the particle sets
+    for (let j = 0; j < number_of_particle_sets; j++) {
       let ps = [];
       let col = colors[p.floor(p.random(colors.length))];
-      for (var i = 0; i < number_of_particles; i++) {
+      for (let i = 0; i < number_of_particles; i++) {
         ps.push(
           new Particle(p.randomGaussian(p.width / 2, 150), p.randomGaussian(p.height / 2, 150), p.random(p.TAU), col)
         );
       }
       particle_sets.push(ps);
     }
-  }
+
+    // Create the blocks array
+    for (let blockIndex = 0; blockIndex < number_of_blocks; blockIndex++) {
+      let block = create_block(number_of_plates, blockIndex);
+      blocks.push(block);
+    }
+  };
 
   p.draw = function() {
 
+    // Clear the canvas
+
+    // Render the particle sets
     particle_sets.forEach(function(particles, index) {
       particles.forEach(function(particle) {
         particle.update(index);
         particle.display(index);
       });
     });
+
+    // Render the tectonic visualization
+    create_tectonic_visualization();
 
     console.log("Palette Name: " + paletteName);
   }
