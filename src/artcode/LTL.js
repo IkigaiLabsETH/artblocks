@@ -13,6 +13,11 @@ let sketch = function(p) {
   let particle_sets = [];
   let number_of_particles = 3300;
   let number_of_particle_sets = 17;
+  let backgroundColors = [
+    p.color(251, 46, 1), // Jasper Red
+    p.color(111, 78, 55), // Coffee
+    p.color(20, 102, 178)  // Ephren Blue
+  ]
 
   class Particle {
     constructor(x, y, phi, col) {
@@ -71,6 +76,10 @@ let sketch = function(p) {
     p.noStroke();
     p.colorMode(p.RGB);
 
+    // Select a random background
+    let backgroundColor = p.random(backgroundColors);
+    p.background(backgroundColor);
+
     // Define the LTL color palettes inspired by Rothko
     let palette1 = {name: "Blue and Grey", colors: [p.color(49, 59, 72), p.color(141, 139, 136), p.color(155, 150, 146)]}; 
     let palette2 = {name: "Number 5", colors: [p.color(221, 43, 24), p.color(248, 102, 2), p.color(251, 169, 1), p.color(249, 192, 7)]}; 
@@ -100,7 +109,6 @@ let sketch = function(p) {
   }
 
   p.draw = function() {
-    p.background(255);
 
     particle_sets.forEach(function(particles, index) {
       particles.forEach(function(particle) {
